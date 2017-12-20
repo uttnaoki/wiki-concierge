@@ -88,10 +88,10 @@ function putMarker(map, data) {
     highlightMarker(data.name, 1)
   })
   .on("mouseout", function(e) {
-    marker.closePopup();
-    $("#marker" + data.name).css({
-      "filter": "hue-rotate(240deg)"
-    })
+    // marker.closePopup();
+    // $("#marker" + data.name).css({
+    //   "filter": "hue-rotate(240deg)"
+    // })
   })
   $(marker._icon).attr("id", "marker" + data.name)
   $(marker._icon).addClass("marker")
