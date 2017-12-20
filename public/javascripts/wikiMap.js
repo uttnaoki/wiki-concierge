@@ -119,7 +119,9 @@ var map;
 
 function drawMap(dataset) {
   //地図の設定
-  map = L.map('map').setView(
+  map = L.map('map', {
+    minZoom: 9
+  }).setView(
     [34.80501, 133.755],
     9
   );
