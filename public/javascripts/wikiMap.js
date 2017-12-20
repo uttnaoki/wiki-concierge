@@ -104,11 +104,13 @@ function putMarker(map, data) {
 
 function appendInfoTag(data) {
   $('#information').append('<div id="info_' + data.name + '" class="info_content">'
-     + '<div class="info_content_inner"><img src="images/' + data.name + '.jpg" alt=""></div>'
-       + '<div class="info_content_inner"><p class="textbox">'
-        + data.name
-       + '</p></div>'
-     + '</div>')
+      + '<div class="info_content_inner">'
+        + '<img src="images/' + data.name + '.jpg" alt="' + data.name + '">'
+      + '</div>'
+      + '<div class="info_content_inner">'
+        + '<p class="textbox">'　+ data.name + '</p>'
+      + '</div>'
+    + '</div>')
   $('#info_' + data.name).on('click', function() {
     highlightMarker(data.name, 1);
   })
