@@ -1,7 +1,15 @@
 function appendPlacesTag(places, boxname) {
   for (const p of places) {
-    $('#' + boxname).append('<div id="' + boxname + '_' +  p.name + '">'
+    const this_id = boxname + '_' + p.name;
+
+    $('#' + boxname).append('<div id="' + this_id + '"'
+      + ' class="' + boxname + '_tag">'
       + p.name + '</div>')
+      
+    $('#' + this_id).on('click', function() {
+      // wikipedia のページへ移動
+      window.location.href = 'https://ja.wikipedia.org/wiki/' + p.name;
+    })
   }
 }
 
