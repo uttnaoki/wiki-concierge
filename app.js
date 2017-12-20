@@ -59,7 +59,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+// 定期実行するコード
+// setInterval(function() {
+//   console.log("hoge");
+// }, 1000);
 
 // サーバーを起動する部分
 var server = app.listen(process.env.PORT||4000, function () {
@@ -67,3 +70,5 @@ var server = app.listen(process.env.PORT||4000, function () {
   var port = server.address().port;
   console.log('Example app listening at https://%s:%s', host, port);
 });
+
+module.exports = app;
