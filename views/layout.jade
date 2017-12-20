@@ -10,5 +10,11 @@ html(lang="ja")
     block head_content
 
   body
+    div#header
+      div.header_elem
+        a(href='https://wiki-concierge.herokuapp.com/wikiMap') HOME
+      div.header_elem 
+        a(href='https://wiki-concierge.herokuapp.com/infoBox') INFO
+    
     script(type='text/javascript' src='/javascripts/config.js')
     block body_content
