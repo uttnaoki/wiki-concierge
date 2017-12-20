@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var exec = require('child_process').exec;
 
 // API 用
 var places = require('./routes/places');
@@ -57,6 +58,14 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+var child = exec("python test.py", function (error, stdout, stderr) {
+  console.log('stdout: ' + stdout);
+  console.log('stderr: ' + stderr);
+  if (error !== null) {
+    console.log('exec error: ' + error);
+  }
 });
 
 // 定期実行するコード
