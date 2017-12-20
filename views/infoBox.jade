@@ -1,17 +1,12 @@
-doctype html
-html(lang="ja")
-  head
-    meta(charset='utf-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1')
-    title= title
-    link(rel='stylesheet' href='/stylesheets/infoBox.css')
-    script(type='text/javascript' src='/third_party/jquery-3.1.1.min.js')
+extends layout
 
-  body
+block head_content
+  link(rel='stylesheet' href='/stylesheets/infoBox.css')
+
+block body_content
     h2 座標が登録されていない観光施設
     div#NoCoordinatePlaces
     h2 wikipedia に登録されていない観光施設
     div#UndefinedPlaces
-      
-    script(type='text/javascript' src='/javascripts/config.js')
+    
     script(type='text/javascript' src='/javascripts/infoBox.js')

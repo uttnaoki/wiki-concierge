@@ -144,7 +144,6 @@ function drawMap(dataset) {
     dataType: 'json'
   })
   .done(function (response) {
-    console.log(response);
     // response にはデータセットが入っています．
     drawMap(response);
   })

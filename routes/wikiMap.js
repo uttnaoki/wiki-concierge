@@ -3,7 +3,7 @@ var router = express.Router();
 var $ = require('jquery');
 
 router.get('/', function(req, res, next) {
-  res.render('wikiMap', { title: 'Express' });
+  res.render('wikiMap', { title: 'ウィキコンシェルジュ' });
 });
 
 module.exports = router;
