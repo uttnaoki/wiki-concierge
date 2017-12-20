@@ -5,9 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// API 用
+var places = require('./routes/places');
+
+// レンダー用
 var index = require('./routes/index');
 var wikiMap = require('./routes/wikiMap');
-var places = require('./routes/places');
+var infoBox = require('./routes/infoBox');
 
 var app = express();
 
@@ -23,9 +27,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// API 用
+app.use('/places', places);
+
+// レンダー用
 app.use('/', index);
 app.use('/wikiMap', wikiMap);
-app.use('/places', places);
+app.use('/infoBox', infoBox);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
