@@ -138,7 +138,8 @@ function drawMap(dataset) {
 
 (function() {
   $.ajax({
-    url: URL + '/places',
+    // wikipedia に座標が書かれているものだけ取得
+    url: URL + '/places?status=1',
     type: 'get',
     dataType: 'json'
   })
