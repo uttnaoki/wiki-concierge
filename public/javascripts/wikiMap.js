@@ -3,9 +3,6 @@
 const icon_filepath = '/images/icon1.png';
 const icon_filepath_phone = '';
 
-var b = "あ";
-var a;
-
 function calScore_subfunc(value, base_value, result_set) {
   let i = 0;
   while (i < base_value.length) {
@@ -70,7 +67,6 @@ function highlightMarker(name, click_flag) {
   marker_set[name].openPopup();
   const lat = marker_set[name]._latlng.lat;
   const lng = marker_set[name]._latlng.lng;
-  // map.setCenter([lng, lat], 10)
   if (click_flag) map.panTo([lat, lng]);
 }
 
@@ -80,33 +76,22 @@ function putMarker(map, data) {
       [data.lat, data.lng], {
         icon: Icon,
         opacity: calScore(data.value, 'opacity'),
-        // title: data.name
       }
     )
     .addTo(map)
     .bindPopup(makePopupMessage(data.name, data.value))
 
   marker.on("mouseover", function(e) {
-    if(b!=data.name){
-      a = 0;
-    }
     highlightMarker(data.name)
   })
   .on("click", function(e) {
-    b=data.name;
     highlightMarker(data.name, 1)
-    a = 1;
   })
   .on("mouseout", function(e) {
-    // $(".marker").show();
-    if (a == 0) {
-      marker.closePopup();
-
-      // marker.closePopup();
-      $("#marker" + data.name).css({
-        "filter": "hue-rotate(240deg)"
-      })
-    }
+    marker.closePopup();
+    $("#marker" + data.name).css({
+      "filter": "hue-rotate(240deg)"
+    })
   })
   $(marker._icon).attr("id", "marker" + data.name)
   $(marker._icon).addClass("marker")
@@ -159,7 +144,7 @@ function drawMap(dataset) {
   })
   .done(function (response) {
     console.log(response);
-    // response == dataset
+    // response にはデータセットが入っています．
     drawMap(response);
   })
   .fail(function (err) {
