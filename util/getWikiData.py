@@ -29,7 +29,7 @@ def shapeWikiData(place, wiki_data):
         info['lat'] = int(latDedree[0]) + int(latDedree[1])/60 + float(latDedree[2])/3600
         info['lng'] = int(lngDedree[0]) + int(lngDedree[1])/60 + float(lngDedree[2])/3600
         info['status'] = 1
-    return info;
+    return info
 
 def makeWikiURL(place):
     return 'https://ja.wikipedia.org/wiki/{0}'.format(urllib.parse.quote(place))
