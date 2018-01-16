@@ -61,22 +61,22 @@ app.use(function(err, req, res, next) {
 const one_minute = 1000 * 60;
 const one_hour = one_minute * 60;
 
-var options = {
+var python_options = {
   mode: 'text',
   pythonPath: process.env.HOSTNAME ? '/home/naoki/.pyenv/shims/python' : '/usr/local/bin/python3',
   pythonOptions: ['-B'],
   args: ['reset'],
   scriptPath: 'util'
 };
-PythonShell.run('updateDB.py', options, function (err, results) {
+PythonShell.run('updateDB.py', python_options, function (err, results) {
   if (err) throw err;
   console.log(results);
 });
 
 // 定期実行するコード
-delete options['args'];
+python_options.args = ['update']
 setInterval(function() {
-  PythonShell.run('updateDB.py', options, function (err, results) {
+  PythonShell.run('updateDB.py', python_options, function (err, results) {
     if (err) throw err;
     console.log(results);
   });
