@@ -45,11 +45,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// app.all('*', function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   next();
-// });
 app.use(cors())
 
 // error handler
@@ -66,16 +61,9 @@ app.use(function(err, req, res, next) {
 const one_minute = 1000 * 60;
 const one_hour = one_minute * 60;
 
-// exec("python -B util/updateDB.py", function (error, stdout, stderr) {
-//   console.log('stdout: ' + stdout);
-//   if (error !== null) {
-//     console.log('exec error: ' + error);
-//   }
-// });
-
 var options = {
   mode: 'text',
-  pythonPath: process.env.PORT ? '/usr/bin/python3' : '/usr/local/bin/python3',
+  pythonPath: process.env.HOSTNAME ? '/home/naoki/.pyenv/shims/python' : '/usr/local/bin/python3',
   pythonOptions: ['-B'],
   args: ['reset'],
   scriptPath: 'util'
