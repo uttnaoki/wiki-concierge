@@ -27,6 +27,34 @@ function appendPlacesTag_wrapper (lower_url, id) {
   });
 }
 
+// Unregisteredテーブル にデータを格納
+function insertUnregisteredDB () {
+  var place_name = $('#textform_unregistered').val();
+  if (!place_name) {
+    alert('施設名を入力していません．')
+    return;
+  }
+
+  $.ajax({
+    url: URL + '/places/unregistered',
+    type: 'POST',
+    data: {
+      'name': place_name
+    }
+  })
+  .done(function (response) {
+    console.log(response);
+    // 未登録施設のタグを再描画
+    $('#UnregisteredPlaces').empty();
+    appendPlacesTag_wrapper('/unregistered', 'UnregisteredPlaces')
+  })
+  .fail(function (err) {
+    console.log(err);
+  });
+
+  $('#textform_unregistered').val('');
+}
+
 (function() {
   // 座標が登録されていない観光施設 について
   appendPlacesTag_wrapper('?status=0', 'NoCoordinatePlaces')

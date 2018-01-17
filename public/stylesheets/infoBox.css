@@ -1,3 +1,7 @@
+.inline-block {
+  display: inline-block;
+}
+
 #NoCoordinatePlaces {
   padding: 0 1em;
 }
@@ -16,8 +20,27 @@
   opacity:0.8;
 }
 
+#header_unregistered {
+  height: 80px;
+  line-height: 50px;
+}
+
+#form_unregistered {
+  padding-left: 1em;
+  height: 50px;
+}
+#form_unregistered input {
+  padding: 0;
+  height: 38px;
+  vertical-align: middle;
+}
+#form_unregistered button {
+  height: 40px;
+  vertical-align: middle;
+}
+
 #UnregisteredPlaces {
-  padding: 0 1em;
+  padding: 1em 1em;
 }
 
 .UnregisteredPlaces_tag {
