@@ -57,7 +57,6 @@ if __name__ == '__main__':
     if argc > 1:
         if argv[1] == 'reset':
             dataset = wd.getPlacesData(spots)
-            print(dataset)
             initializeDB(dbname, dataset)
         elif argv[1] == 'update':
             dataset = wd.getPlacesData(spots)
