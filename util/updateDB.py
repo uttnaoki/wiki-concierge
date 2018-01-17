@@ -38,6 +38,11 @@ def initializeDB(dbname, dataset):
     conn.commit()
     conn.close()
 
+def current_places(conn):
+    c = conn.cursor()
+    select_sql = 'SELECT name FROM place_datas'
+    return c.execute(select_sql)
+
 def editDB(data, conn):
     c = conn.cursor()
     sql = 'UPDATE place_datas SET lat=?, lng=?, value=?, status=?, overview=? WHERE name = ?'
@@ -59,8 +64,8 @@ if __name__ == '__main__':
             dataset = wd.getPlacesData(spots)
             initializeDB(dbname, dataset)
         elif argv[1] == 'update':
-            dataset = wd.getPlacesData(spots)
             conn = sqlite3.connect(dbname)
-            [editDB(d, conn) for d in dataset]
+            current_spots = current_places(conn)
+            [editDB(wd.getPlaceData(s[0]), conn) for s in current_spots]
             conn.commit()
             conn.close()
