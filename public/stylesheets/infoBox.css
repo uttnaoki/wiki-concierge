@@ -15,3 +15,21 @@
   filter:alpha(opacity=80);
   opacity:0.8;
 }
+
+#UnregisteredPlaces {
+  padding: 0 1em;
+}
+
+.UnregisteredPlaces_tag {
+  display: inline-block;
+  margin: 0.4em;
+  padding: 0.3em;
+  color: white;
+  background-color: #00da00;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+.UnregisteredPlaces_tag:hover {
+  filter:alpha(opacity=80);
+  opacity:0.8;
+}

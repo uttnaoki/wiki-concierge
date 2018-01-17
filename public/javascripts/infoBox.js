@@ -14,6 +14,7 @@ function appendPlacesTag(places, boxname) {
 }
 
 (function() {
+  // 座標が登録されていない観光施設 について
   $.ajax({
     // wikipedia に座標が書かれているものだけ取得
     url: URL + '/places?status=0',
@@ -22,6 +23,19 @@ function appendPlacesTag(places, boxname) {
   })
   .done(function (response) {
     appendPlacesTag(response, 'NoCoordinatePlaces')
+  })
+  .fail(function (err) {
+    console.log(err);
+  });
+
+  // wikipedia に登録されていない観光施設 について
+  $.ajax({
+    url: URL + '/places/unregistered',
+    type: 'get',
+    dataType: 'json'
+  })
+  .done(function (response) {
+    appendPlacesTag(response, 'UnregisteredPlaces')
   })
   .fail(function (err) {
     console.log(err);
