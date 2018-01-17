@@ -34,6 +34,22 @@ router.get('/', function(req, res, next) {
   db.close();
 });
 
+/* wikiデータを送る */
+router.get('/unregistered', function(req, res, next) {
+  var db = new sqlite3.Database('database.db');
+  // res.headers = {"Access-Control-Allow-Origin": "*"};
+
+  var sql = 'SELECT name FROM unregistered'
+
+  db.serialize(function() {
+    db.all(sql, function(err, rows) {
+      res.json(rows);
+    });
+  });
+
+  db.close();
+});
+
 // wikipedia に登録されていない観光施設
 router.post('/unregistered', function(req, res) {
   const request_place = req.body.name
