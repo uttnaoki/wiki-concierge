@@ -14,7 +14,7 @@ def initializeDB(dbname, dataset):
 
     # place_datas の初期化
     create_table = '''create table place_datas (
-                    name varchar(64),
+                    name varchar(64) UNIQUE NOT NULL,
                     lat real,
                     lng real,
                     value int,
@@ -31,7 +31,7 @@ def initializeDB(dbname, dataset):
 
     # unregistered の初期化
     create_table = '''create table unregistered (
-                    name varchar(64)
+                    name varchar(64) UNIQUE NOT NULL
                     )'''
     c.execute(create_table)
 
