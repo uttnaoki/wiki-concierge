@@ -29,7 +29,6 @@ def initializeDB(dbname, dataset):
         for data in dataset]
     c.executemany(insert_sql, place_datas)
 
-
     # unregistered の初期化
     create_table = '''create table unregistered (
                     name varchar(64)
