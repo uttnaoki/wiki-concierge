@@ -1,3 +1,3 @@
 # wiki-concierge
 
-ページURL(https://wiki-concierge.herokuapp.com/wikiMap)
+ページURL(http://27.133.132.229/wikiMap)
