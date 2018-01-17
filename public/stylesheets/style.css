@@ -6,6 +6,34 @@ body {
   overflow: hidden;
 }
 #header {
-  text-align: right;
-  margin-top: 1em;
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 0;
+}
+
+#header .header_elem {
+  display: inline-block;
+  margin: 0.5em 0.2em;
+}
+
+#header .title {
+  font-size: 1.2em;
+  margin-right: 1em;
+}
+
+#header a {
+  border: 2px solid;
+  border-radius: 15px;
+  padding: 10px;
+  color: #65ace4;
+  background-color: #fff;
+  text-decoration: none;
+}
+#header a.current_page{
+  border: 2px solid #65ace4;
+  border-radius: 15px;
+  padding: 10px;
+  color: #fff;
+  background-color: #65ace4;
+  text-decoration: none;
 }

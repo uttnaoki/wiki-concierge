@@ -11,10 +11,11 @@ html(lang="ja")
 
   body
     div#header
+      div.header_elem.title ウィキコンシェルジュ
       div.header_elem
-        a(href='/wikiMap') HOME
-      div.header_elem 
-        a(href='/infoBox') INFO
+        a(href='/wikiMap' class=(current_page === "wikiMap" ? "current_page" : "")) HOME
+      div.header_elem
+        a(href='/infoBox' class=(current_page === "infoBox" ? "current_page" : "")) INFO
     
     script(type='text/javascript' src='/javascripts/config.js')
     block body_content
