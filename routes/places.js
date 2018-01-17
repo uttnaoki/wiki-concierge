@@ -53,10 +53,10 @@ router.post('/unregistered', function(req, res) {
     });
   };
   selectValue(request_place).then(function (result) {
-    res.send(result.name + 'をDBに格納');
+    res.send('"' + request_place + '"をDBに格納しました．');
   }).catch(function (err) {
     console.log('Failure:', err);
-    res.send('DB検索処理でエラーが発生しました．')
+    res.send('DBに挿入できませんでした．')
   });
 
   db.close();
