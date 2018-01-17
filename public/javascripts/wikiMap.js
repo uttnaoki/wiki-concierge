@@ -48,11 +48,11 @@ function setIconOption(value) {
   return Icon;
 }
 
-function makePopupMessage(name, value) {
+function makePopupMessage(name, value, overview) {
   const message =
     '<h2>' +
     '<a href="https://ja.wikipedia.org/wiki/' + name + '" target="_blank">' + name + '</a>' +
-    // "<p>" + value + "</p>" +
+    "<p>" + overview + "</p>" +
     '</h2>';
   return message;
 }
@@ -79,7 +79,7 @@ function putMarker(map, data) {
       }
     )
     .addTo(map)
-    .bindPopup(makePopupMessage(data.name, data.value))
+    .bindPopup(makePopupMessage(data.name, data.value, data.overview))
 
   marker.on("mouseover", function(e) {
     highlightMarker(data.name)
