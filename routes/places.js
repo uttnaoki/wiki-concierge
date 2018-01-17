@@ -34,4 +34,32 @@ router.get('/', function(req, res, next) {
   db.close();
 });
 
+// wikipedia に登録されていない観光施設
+router.post('/unregistered', function(req, res) {
+  const request_place = req.body.name
+
+  var db = new sqlite3.Database('database.db');
+
+  var selectValue = function (condition) {
+    return new Promise(function (resolve, reject) {
+      db.serialize(function () {
+        db.run('INSERT INTO unregistered values ($name)',
+          { $name : condition },
+          function (err, res) {
+            if (err) return reject(err);
+            resolve(res);
+        });
+      });
+    });
+  };
+  selectValue(request_place).then(function (result) {
+    res.send(result.name + 'をDBに格納');
+  }).catch(function (err) {
+    console.log('Failure:', err);
+    res.send('DB検索処理でエラーが発生しました．')
+  });
+
+  db.close();
+})
+
 module.exports = router;
