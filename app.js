@@ -70,7 +70,7 @@ var python_options = {
 };
 PythonShell.run('updateDB.py', python_options, function (err, results) {
   if (err) throw err;
-  console.log(results);
+  console.log('updateDB_stdout:' + results);
 });
 
 // 定期実行するコード
@@ -78,7 +78,7 @@ python_options.args = ['update']
 setInterval(function() {
   PythonShell.run('updateDB.py', python_options, function (err, results) {
     if (err) throw err;
-    console.log(results);
+    console.log('updateDB_stdout:' + results);
   });
 }, one_hour);
 
