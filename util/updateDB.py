@@ -9,6 +9,10 @@ def initializeDB(dbname, dataset):
     if os.path.isfile(dbname):
         os.remove(dbname)
 
+    conn = sqlite3.connect(dbname)
+    c = conn.cursor()
+
+    # place_datas の初期化
     create_table = '''create table place_datas (
                     name varchar(64),
                     lat real,
@@ -17,15 +21,20 @@ def initializeDB(dbname, dataset):
                     status int,
                     article varchar(100000)
                     )'''
-    conn = sqlite3.connect(dbname)
-    c = conn.cursor()
     c.execute(create_table)
 
     insert_sql = 'insert into place_datas (name, lat, lng, value, status, article) values (?,?,?,?,?,?)'
     place_datas = [(data['name'], data['lat'], data['lng'], \
-    data['value'], data['status'], data['article']) \
-    for data in dataset]
+        data['value'], data['status'], data['article']) \
+        for data in dataset]
     c.executemany(insert_sql, place_datas)
+
+
+    # unregistered の初期化
+    create_table = '''create table unregistered (
+                    name varchar(64)
+                    )'''
+    c.execute(create_table)
 
     conn.commit()
     conn.close()
@@ -34,7 +43,7 @@ def editDB(data, conn):
     c = conn.cursor()
     sql = 'UPDATE place_datas SET lat=?, lng=?, value=?, status=?, article=? WHERE name = ?'
     place_data = (data['lat'], data['lng'], \
-    data['value'], data['status'], data['article'], data['name'])
+        data['value'], data['status'], data['article'], data['name'])
     c.execute(sql, place_data)
 
 if __name__ == '__main__':
