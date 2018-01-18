@@ -18,6 +18,12 @@
   display: inline-block;
 }
 
+.PopupMessage {
+  max-width: 350px;
+  max-height: 240px;
+  overflow: scroll;
+}
+
 #information {
   width: 30%;
   height: 100%;

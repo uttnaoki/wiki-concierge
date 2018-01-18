@@ -52,8 +52,9 @@ function makePopupMessage(name, value, overview) {
   const message =
     '<h2>' +
     '<a href="https://ja.wikipedia.org/wiki/' + name + '" target="_blank">' + name + '</a>' +
-    "<p>" + overview + "</p>" +
-    '</h2>';
+    '</h2>' +
+    '<p class="PopupMessage">' + overview + '</p>';
+    // '</h2>';
   return message;
 }
 
