@@ -28,8 +28,7 @@
   border-radius: 0.5em;
   cursor: pointer;
 }
-.places_tag:hover {
-  filter:alpha(opacity=80);
+.place_tag:hover {
   opacity:0.8;
 }
 
