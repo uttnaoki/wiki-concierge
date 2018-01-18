@@ -2,6 +2,19 @@
   display: inline-block;
 }
 
+#already_added {
+  padding: 2% 4%;
+  background-color: rgba(177, 215, 228, 0.6);
+  border-radius: 1em;
+  margin: 2% 0;
+}
+
+#befor_adding {
+  padding: 2% 4%;
+  background-color: rgba(222, 150, 16, 0.4);
+  border-radius: 1em;
+}
+
 #NoCoordinatePlaces {
   padding: 0 1em;
 }
