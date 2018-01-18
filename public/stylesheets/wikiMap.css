@@ -38,6 +38,13 @@
   vertical-align: middle;
   margin: 0;
 }
+#information .info_content_inner.class_type0 {
+  background-color: #b0e0e6;
+}
+#information .info_content_inner.class_type1 {
+  background-color: #e0ffff;
+}
+
 #information .info_content_inner img {
   max-width: 100%;
   max-height: 100%;

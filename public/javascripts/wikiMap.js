@@ -102,12 +102,12 @@ function putMarker(map, data) {
   return marker;
 }
 
-function appendInfoTag(data) {
+function appendInfoTag(data, class_type) {
   $('#information').append('<div id="info_' + data.name + '" class="info_content">'
-      + '<div class="info_content_inner">'
+      + '<div class="info_content_inner class_type' + class_type + '">'
         + '<img src="images/' + data.name + '.jpg" alt="' + data.name + '">'
       + '</div>'
-      + '<div class="info_content_inner">'
+      + '<div class="info_content_inner class_type' + class_type + '">'
         + '<p class="textbox">'　+ data.name + '</p>'
       + '</div>'
     + '</div>')
@@ -133,10 +133,12 @@ function drawMap(dataset) {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }
   ).addTo(map);
+  var info_class_type = 0;
   for (var d of dataset) {
     // console.log(Math.log(d.value));
     marker_set[d.name] = putMarker(map, d);
-    appendInfoTag(d);
+    appendInfoTag(d, info_class_type);
+    info_class_type = Number(!info_class_type);
   }
 }
 
