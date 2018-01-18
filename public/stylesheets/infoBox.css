@@ -6,7 +6,7 @@
   padding: 0 1em;
 }
 
-.NoCoordinatePlaces_tag {
+.place_tag {
   display: inline-block;
   margin: 0.4em;
   padding: 0.3em;
@@ -15,14 +15,13 @@
   border-radius: 0.5em;
   cursor: pointer;
 }
-.NoCoordinatePlaces_tag:hover {
+.places_tag:hover {
   filter:alpha(opacity=80);
   opacity:0.8;
 }
 
-#header_unregistered {
-  height: 80px;
-  line-height: 50px;
+#UnregisteredPlaces {
+  padding: 1em 1em;
 }
 
 #form_unregistered {
@@ -41,18 +40,4 @@
 
 #UnregisteredPlaces {
   padding: 1em 1em;
-}
-
-.UnregisteredPlaces_tag {
-  display: inline-block;
-  margin: 0.4em;
-  padding: 0.3em;
-  color: white;
-  background-color: #00da00;
-  border-radius: 0.5em;
-  cursor: pointer;
-}
-.UnregisteredPlaces_tag:hover {
-  filter:alpha(opacity=80);
-  opacity:0.8;
 }

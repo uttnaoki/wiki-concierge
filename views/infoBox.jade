@@ -7,12 +7,13 @@ block body_content
   h2 座標が登録されていない観光施設
   div#NoCoordinatePlaces
     
-  div#feild_unregistered
-    div#header_unregistered
-      h2.inline-block wikipedia に登録されていない観光施設
-      div#form_unregistered.inline-block
-        input(id='textform_unregistered' class='inline-block form' type="text" name="textform_unregistered")
-        button(class='inline-block form' type='button' onclick='insertUnregisteredDB()') 追加
-    div#UnregisteredPlaces
+  h2.inline-block wikipedia に登録されていない観光施設
+  div#NoPagePlaces
+      
+  h2 追加してほしい観光施設
+  div#form_unregistered.inline-block
+    input(id='textform_unregistered' class='inline-block form' type="text" name="textform_unregistered")
+    button(class='inline-block form' type='button' onclick='insertUnregisteredDB()') 送信
+  div#UnregisteredPlaces
   
   script(type='text/javascript' src='/javascripts/infoBox.js')

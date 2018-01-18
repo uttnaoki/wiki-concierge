@@ -3,7 +3,7 @@ function appendPlacesTag(places, boxname) {
     const this_id = boxname + '_' + p.name;
 
     $('#' + boxname).append('<p id="' + this_id + '"'
-      + ' class="' + boxname + '_tag">'
+      + ' class="place_tag">'
       + p.name + '</p>')
 
     $('#' + this_id).on('click', function() {
