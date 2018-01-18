@@ -2,6 +2,7 @@
 
 const icon_filepath = '/images/icon1.png';
 const icon_filepath_phone = '';
+let status_select_marker = { flag: 0, name: '' };
 
 function calScore_subfunc(value, base_value, result_set) {
   let i = 0;
@@ -54,7 +55,6 @@ function makePopupMessage(name, value, overview) {
     '<a href="https://ja.wikipedia.org/wiki/' + name + '" target="_blank">' + name + '</a>' +
     '</h2>' +
     '<p class="PopupMessage">' + overview + '</p>';
-    // '</h2>';
   return message;
 }
 
@@ -86,13 +86,17 @@ function putMarker(map, data) {
     highlightMarker(data.name)
   })
   .on("click", function(e) {
+    status_select_marker.flag = 1;
+    status_select_marker.name = data.name;
     highlightMarker(data.name, 1)
   })
   .on("mouseout", function(e) {
-    // marker.closePopup();
-    // $("#marker" + data.name).css({
-    //   "filter": "hue-rotate(240deg)"
-    // })
+    if (!status_select_marker.flag) {
+      marker.closePopup();
+      $("#marker" + data.name).css({
+        "filter": "hue-rotate(240deg)"
+      })
+    }
   })
   $(marker._icon).attr("id", "marker" + data.name)
   $(marker._icon).addClass("marker")
@@ -127,7 +131,13 @@ function drawMap(dataset) {
   }).setView(
     [34.80501, 133.755],
     9
-  );
+  ).on('click', function(e) {
+    $("#marker" + status_select_marker.name).css({
+      "filter": "hue-rotate(240deg)"
+    })
+    status_select_marker.flag = 0;
+    status_select_marker.name = '';
+  });
   //地図タイルの設定
   L.tileLayer(
     'http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
