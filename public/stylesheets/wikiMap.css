@@ -37,6 +37,9 @@
   height: 20%;
   display: table;
 }
+#information .info_content:hover {
+  opacity: 0.8;
+}
 #information .info_content_inner {
   width: 50%;
   height: 100%;
