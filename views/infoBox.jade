@@ -12,9 +12,9 @@ block body_content
     //- div#NoPagePlaces
       
   div#befor_adding
-    h2 追加してほしい観光施設
-    div#form_unregistered.inline-block
-      input(id='textform_unregistered' class='inline-block form' type="text" name="textform_unregistered")
+    div#form_unregistered
+      h2.inline-block 追加してほしい観光施設
+      input#textform_unregistered.inline-block.form(type="text" name="textform_unregistered" placeholder=' 観光施設名')
       button(class='inline-block form' type='button' onclick='insertUnregisteredDB()') 送信
     div#UnregisteredPlaces
   

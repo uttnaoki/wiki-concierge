@@ -32,24 +32,30 @@
   opacity:0.8;
 }
 
-#UnregisteredPlaces {
-  padding: 1em 1em;
-}
-
 #form_unregistered {
-  padding-left: 1em;
-  height: 50px;
+  /* height: 6em; */
+}
+#form_unregistered h2{
+  vertical-align: middle;
 }
 #form_unregistered input {
-  padding: 0;
-  height: 38px;
+  /* padding: 0; */
+  margin-left: 2em;
+  margin-right: 0.3em;
+  /* padding:10px; */
+  font-family:Arial, sans-serif;
+  height: 1.5em;
   vertical-align: middle;
+  border-radius: 0.5em;
+  background-color: #fff;
 }
 #form_unregistered button {
-  height: 40px;
+  height: 2.2em;
   vertical-align: middle;
+  border-radius: 0.5em;
+  background-color: #fff;
 }
 
 #UnregisteredPlaces {
-  padding: 1em 1em;
+  padding: 0;
 }
