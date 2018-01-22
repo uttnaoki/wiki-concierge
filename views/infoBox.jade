@@ -5,15 +5,12 @@ block head_content
 
 block body_content
   div#already_added
-    h2 座標が登録されていない観光施設
+    h2 座標が登録されていない観光スポット
     div#NoCoordinatePlaces
-      
-    //- h2.inline-block wikipedia に登録されていない観光施設
-    //- div#NoPagePlaces
       
   div#befor_adding
     div#form_unregistered
-      h2.inline-block 追加してほしい観光施設
+      h2.inline-block 追加してほしい観光スポット
       input#textform_unregistered.inline-block.form(type="text" name="textform_unregistered" placeholder=' 観光施設名')
       button(class='inline-block form' type='button' onclick='insertUnregisteredDB()') 送信
     div#UnregisteredPlaces
