@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
     // 入力項目を正しく入力しているものだけ取得
     sql = sql + ' WHERE status = 1'
   } else {
-    res.json({'message':'クエリに誤りがあります．'})
+    res.json({'message':'クエリに誤りがあります。'})
   }
 
   if (sql) {
@@ -55,11 +55,11 @@ router.post('/unregistered', function(req, res) {
 
   var db = new sqlite3.Database('database.db');
 
-  var selectValue = function (condition) {
+  var selectDB = function (place_name, table_name) {
     return new Promise(function (resolve, reject) {
       db.serialize(function () {
-        db.run('INSERT INTO unregistered values ($name)',
-          { $name : condition },
+        db.all('SELECT name FROM ' + table_name + ' WHERE name = $place_name',
+          { $place_name : place_name },
           function (err, res) {
             if (err) return reject(err);
             resolve(res);
@@ -67,14 +67,50 @@ router.post('/unregistered', function(req, res) {
       });
     });
   };
-  selectValue(request_place).then(function (result) {
-    res.send('"' + request_place + '"をDBに格納しました．');
+
+  var insertDB = function (place_name) {
+    return new Promise(function (resolve, reject) {
+      db.serialize(function () {
+        db.run('INSERT INTO unregistered values ($name)',
+          { $name : place_name },
+          function (err, res) {
+            if (err) return reject(err);
+            resolve(res);
+        });
+      });
+    });
+  };
+
+  selectDB(request_place, 'place_datas').then(function (result) {
+  // selectDB(request_place, 'place_datas').then(function (result) {
+    if (result.length) {
+      res.send('ウィキコンシェルジュに登録済です。')
+    } else {
+      selectDB(request_place, 'unregistered').then(function (result) {
+        if (result.length) {
+          // res.send({name:'aaa', nameb:'bbb'})
+          res.send('既に送信された観光スポットです。')
+        } else {
+          insertDB(request_place).then(function (result) {
+            res.send('"' + request_place + '"を追加してほしい観光スポットに登録しました。');
+            db.close();
+          }).catch(function (err) {
+            console.log('Failure:', err);
+            res.send('"' + request_place + '"を追加してほしい観光スポットに登録できませんでした。')
+            db.close();
+          });
+        }
+      }).catch(function (err) {
+        console.log('Failure:', err);
+        res.send('unregisteredテーブル にアクセスできませんでした。')
+        db.close();
+      });
+    }
   }).catch(function (err) {
     console.log('Failure:', err);
-    res.send('DBに挿入できませんでした．')
+    res.send('place_datasテーブル にアクセスできませんでした。')
+    db.close();
   });
-
-  db.close();
 })
 
 module.exports = router;
