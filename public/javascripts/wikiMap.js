@@ -84,6 +84,10 @@ function putMarker(map, data) {
 
   marker.on("mouseover", function(e) {
     highlightMarker(data.name)
+    if (data.name != status_select_marker.name) {
+      status_select_marker.flag = 0;
+      status_select_marker.name = '';
+    }
   })
   .on("click", function(e) {
     status_select_marker.flag = 1;
