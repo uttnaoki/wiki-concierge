@@ -40,12 +40,12 @@
   vertical-align: middle;
 }
 #form_unregistered input {
-  /* padding: 0; */
+  font-size: 3;
   margin-left: 2em;
   margin-right: 0.3em;
-  /* padding:10px; */
   font-family:Arial, sans-serif;
   height: 1.5em;
+  padding-left: 0.5em;
   vertical-align: middle;
   border-radius: 0.5em;
   background-color: #fff;
