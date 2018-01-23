@@ -4,6 +4,20 @@ import sqlite3
 import os
 import getWikiData as wd
 import sys
+from collections import OrderedDict
+
+place_datas_column = OrderedDict()
+place_datas_column['name'] = 'varchar(64) UNIQUE NOT NULL'
+place_datas_column['lat'] = 'real'
+place_datas_column['lng'] = 'real'
+place_datas_column['status'] = 'int'
+place_datas_column['overview'] = 'varchar(10000)'
+place_datas_column['lastmod'] = 'varchar(16)'
+place_datas_column['Score_countFulltext'] = 'int'
+place_datas_column['Score_countLang'] = 'int'
+place_datas_column['Score_itemCount'] = 'int'
+place_datas_column['Score_editfrequency'] = 'int'
+place_datas_column['Score_countperson'] = 'int'
 
 def initializeDB(dbname, dataset):
     if os.path.isfile(dbname):
@@ -13,21 +27,16 @@ def initializeDB(dbname, dataset):
     c = conn.cursor()
 
     # place_datas の初期化
-    create_table = '''create table place_datas (
-                    name varchar(64) UNIQUE NOT NULL,
-                    lat real,
-                    lng real,
-                    value int,
-                    status int,
-                    overview varchar(100000),
-                    lastmod varchar(16)
-                    )'''
+    table_param = ','.join(['{0} {1}'.format(key,value) for key,value in place_datas_column.items()])
+    create_table = 'create table place_datas ({0})'.format(table_param)
     c.execute(create_table)
 
-    insert_sql = 'INSERT INTO place_datas (name, lat, lng, value, status, overview, lastmod) VALUES (?,?,?,?,?,?,?)'
-    place_datas = [(data['name'], data['lat'], data['lng'], \
-        data['value'], data['status'], data['overview'], data['lastmod']) \
-        for data in dataset]
+    sql_column = ', '.join(place_datas_column)
+    sql_values = ', '.join(['?' for i in place_datas_column])
+    insert_sql = 'INSERT INTO place_datas ({0}) VALUES ({1})'.format(sql_column, sql_values)
+
+    place_datas = [ ([data[col] for col in place_datas_column]) for data in dataset]
+
     c.executemany(insert_sql, place_datas)
 
     # unregistered の初期化
@@ -46,10 +55,13 @@ def current_places(conn):
 
 def editDB(data, conn):
     c = conn.cursor()
-    sql = 'UPDATE place_datas SET lat=?, lng=?, value=?, status=?, overview=?, lastmod=? WHERE name = ?'
-    place_data = (data['lat'], data['lng'], data['value'], \
-        data['status'], data['overview'], data['lastmod'], data['name'])
-    c.execute(sql, place_data)
+    
+    sql_set = ','.join(['{0}=?'.format(col) for col in place_datas_column if col != 'name'])
+    sql = 'UPDATE place_datas SET {0} WHERE name = ?'.format(sql_set)
+
+    place_datas = ([data[col] for col in place_datas_column if col != 'name'] + [data['name']])
+
+    c.execute(sql, place_datas)
 
 if __name__ == '__main__':
     argv = sys.argv
