@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   var db = new sqlite3.Database('database.db');
   // res.headers = {"Access-Control-Allow-Origin": "*"};
 
-  var sql = 'SELECT name, lat, lng, value, overview FROM place_datas';
+  var sql = 'SELECT * FROM place_datas';
 
   if (req.query.status === undefined) {
   } else if(req.query.status === '0') {
