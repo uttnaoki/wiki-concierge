@@ -20,8 +20,11 @@
 
 .PopupMessage {
   max-width: 350px;
-  max-height: 240px;
+  max-height: 100px;
   overflow: scroll;
+}
+.PopupMessage.click {
+  max-height: 200px;
 }
 
 #information {
