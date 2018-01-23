@@ -8,7 +8,7 @@ function calScore(Scores, type) {
   let result = 0;
   const result_set = {
     size: [30, 45, 60, 90, 120, 150],
-    opacity: [0.5, 0.5, 0.75, 0.75, 1, 1.5]
+    opacity: [0.5, 0.6, 0.7, 0.8, 0.9, 1]
   }
 
   let scores_sum = 0;
@@ -19,7 +19,7 @@ function calScore(Scores, type) {
   }
   const scores_mean = scores_sum / scores_len;
 
-  return result_set[type][Math.floor(scores_mean)];
+  return result_set[type][Math.round(scores_mean)];
 }
 
 function setIconOption(Scores) {
