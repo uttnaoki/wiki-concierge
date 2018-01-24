@@ -10,11 +10,18 @@ def splitCoorStr(text):
     split_coor = re.split('度|分', text)
     return split_coor
 
-def shapeWikiData(place, wiki_data):
+def shapeWikiData(place, wiki_data, lastmod_old):
     # info に欲しいデータを格納し，return する．
     info = {}
 
+    # 正規化前の指標値を格納
     values = {}
+
+    # 最終更新日を取得し，更新がなければ None を return
+    lastmod_new = wiki_data.find("li",id="footer-info-lastmod").text.split(" ")[2]
+    if lastmod_old == lastmod_new:
+        return None
+    info['lastmod'] = lastmod_new
 
     # 観光施設名を格納
     info['name'] = place
@@ -23,10 +30,6 @@ def shapeWikiData(place, wiki_data):
     Fulltext = wiki_data.find("div",class_="mw-parser-output").text
     countFulltext = len(Fulltext)
     values['countFulltext'] = countFulltext
-
-    # 最終更新日を取得
-    lastmod = wiki_data.find("li",id="footer-info-lastmod").text.split(" ")
-    info['lastmod'] = lastmod[2]
 
     # 他言語の記事数を取得
     interlanguage = wiki_data.find("div",id="p-lang").findAll("li")
@@ -120,6 +123,7 @@ def calScore(value,threshold):
     else:
         x = 5
     return x
+
 def editpersonList(history_url,personlist):
     html = urllib.request.urlopen(history_url).read()
     historysoup = BeautifulSoup(html, 'lxml')
@@ -179,21 +183,36 @@ def saveImg(place, wiki_data, img):
             author = author.encode('utf-8').split()[1].decode('utf-8')
     urllib.request.urlretrieve(imgurl,img_path)
 
-def getPlaceData(place, img):
+def getPlaceData(data, img):
+    if len(data) == 2:
+        place = data[0]
+        lastmod = data[1]
+    else:
+        place = data
+        lastmod = 0
+
     url = makeWikiURL(place)
     html = urllib.request.urlopen(url).read()
     html = re.sub(r'<sup.*?</sup>', '',html.decode("utf-8"))
     wiki_data = BeautifulSoup(html, 'lxml')
-    saveImg(place, wiki_data, img)
-    return shapeWikiData(place, wiki_data)
+    wd = shapeWikiData(place, wiki_data, lastmod)
+
+    # 記事が更新されていれば画像を取得
+    if wd is not None:
+        saveImg(place, wiki_data, img)
+        return wd
+    # 記事が更新されていなければ return しない
 
 def getPlacesData(places):
     # img は saveImg() で使用
     img = Image.open("public/images/NoImage.jpg")
     info = [getPlaceData(p, img) for p in places]
+    # 更新なしのデータ(None)を削除
+    info = [d for d in info if d is not None]
     return info
 
 if __name__ == '__main__':
     # title = ["後楽園","倉敷美観地区"]
+    # title = [["後楽園",'2017年12月16日'],["倉敷美観地区",'2018年1月7日']]
     title = ["後楽園","倉敷美観地区","岡山城","吉備津神社","最上稲荷","鬼ノ城","鷲羽山ハイランド","井倉洞","満奇洞","湯原温泉","湯郷温泉","津山城","ドイツの森","吹屋ふるさと村郷土館","旧矢掛本陣石井家","奥津渓","美星町","勝山町並み保存地区","玉島町並み保存地区","旧片山家住宅"]
     wiki_dataset = getPlacesData(title)

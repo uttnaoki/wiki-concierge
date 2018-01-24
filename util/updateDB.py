@@ -50,12 +50,12 @@ def initializeDB(dbname, dataset):
 
 def current_places(conn):
     c = conn.cursor()
-    select_sql = 'SELECT name FROM place_datas'
+    select_sql = 'SELECT name, lastmod FROM place_datas'
     return c.execute(select_sql)
 
 def editDB(data, conn):
     c = conn.cursor()
-    
+
     sql_set = ','.join(['{0}=?'.format(col) for col in place_datas_column if col != 'name'])
     sql = 'UPDATE place_datas SET {0} WHERE name = ?'.format(sql_set)
 
@@ -67,16 +67,16 @@ if __name__ == '__main__':
     argv = sys.argv
     argc = len(argv)
 
-    spots = ["後楽園","倉敷美観地区","岡山城","吉備津神社","最上稲荷","鬼ノ城","鷲羽山ハイランド","井倉洞","満奇洞","湯原温泉","湯郷温泉","津山城","ドイツの森","吹屋ふるさと村郷土館","旧矢掛本陣石井家","奥津渓","美星町"]
-
     dbname = 'database.db'
     if argc > 1:
         if argv[1] == 'reset':
-            dataset = wd.getPlacesData(spots)
+            places = ["後楽園","倉敷美観地区","岡山城","吉備津神社","最上稲荷","鬼ノ城","鷲羽山ハイランド","井倉洞","満奇洞","湯原温泉","湯郷温泉","津山城","ドイツの森","吹屋ふるさと村郷土館","旧矢掛本陣石井家","奥津渓","美星町","勝山町並み保存地区","玉島町並み保存地区","旧片山家住宅"]
+            dataset = wd.getPlacesData(places)
             initializeDB(dbname, dataset)
         elif argv[1] == 'update':
             conn = sqlite3.connect(dbname)
-            current_spots = [s[0] for s in current_places(conn)]
-            [editDB(data, conn) for data in wd.getPlacesData(current_spots)]
+            current_places = [d for d in current_places(conn)]
+            # current_places = current_places(conn)
+            [editDB(data, conn) for data in wd.getPlacesData(current_places)]
             conn.commit()
             conn.close()
