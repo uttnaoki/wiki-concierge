@@ -70,3 +70,35 @@
   margin: auto;
   vertical-align: middle;
 }
+
+#explanation {
+  width: 95%;
+  background-color: #efefef;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  padding: 2em;
+}
+#explanation p {
+  margin: 0 4em 0 1em;
+}
+
+#legend {
+  /* border: 2px solid; */
+  border-radius: 20px;
+  background-color: #f9f9f9;
+  margin: 1em;
+}
+#legend .label {
+  margin-left: 1em;
+  margin-right: 1em;
+  font-size: 20px;
+}
+#legend .img_td {
+  vertical-align: bottom;
+}
+#legend img {
+  filter: hue-rotate(240deg);
+}
+#legend .level_cell {
+  text-align: center;
+}

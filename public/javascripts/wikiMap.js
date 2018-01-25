@@ -150,6 +150,43 @@ function drawMap(dataset) {
   }
 }
 
+const view_legend = () => {
+  const level_num = 6;
+  const max_size = calScore({tmp: level_num-1}, 'size');
+
+  const img_cell = (cell_num) => {
+    let tag = '';
+    for (let i = 0; i < cell_num; i++) {
+      tag += '<td id="legend_img' + i + '" class="img_td"></td>';
+    }
+    return tag;
+  };
+  const level_cell = (cell_num) => {
+    let tag = '';
+    for (let i = 0; i < cell_num; i++) {
+      tag += '<td class="level_cell">' + (i+1) + '</td>';
+    }
+    return tag;
+  }
+
+  $('#legend_row0').append('<td rowspan="2"><div class="label">低い評価<div></td>'
+    + img_cell(level_num) + '<td rowspan="2"><div class="label">高い評価<div></td>')
+  $('#legend_row1').append(level_cell(level_num))
+
+  for (let i = 0; i < level_num; i++) {
+    const img = $('<img src="' + icon_filepath + '">');
+    // const img = $('<img src="' + icon_filepath + '" id="legend_img"' + i + '>');
+    const size = calScore({tmp: i}, 'size');
+    const opacity = calScore({tmp: i}, 'opacity');
+
+    $('#legend_img' + i).append(img);
+    img.ready(function() {
+      img.width(size).height(size);
+      img.css('opacity', opacity);
+    })
+  }
+};
+
 (function() {
   // ページの更新日時(DB更新日時) を取得
   $.ajax({
@@ -179,4 +216,6 @@ function drawMap(dataset) {
   .fail(function (err) {
     console.log(err);
   });
+
+  view_legend();
 }());

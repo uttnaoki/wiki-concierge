@@ -9,4 +9,23 @@ block body_content
   div#view
     div#map
     div#information
+  div#explanation
+    h3 マーカーのサイズと透過度について
+    p マップ上のマーカーは観光スポットの評価を基に，サイズと透過度を変えています。
+      |wikipediaの記事の内容を評価し，6段階のレベルに分類しています。
+    p 各レベルのマーカーのサイズと透過度は以下の通りです。
+    div#legend
+      table
+        tr#legend_row0
+        tr#legend_row1
+      div#legend_img
+    p wikipediaの記事の評価指標は以下の5つです。
+    ul
+      li: 他言語の記事数
+      li: 目次の項目数
+      li: テキスト量
+      li: 記事の更新頻度
+      li: 編集者の数
+    p 上記の各指標毎に，記事を6段階で評価し，その平均を計算します。
+      |その平均の小数点以下を四捨五入し，最終的な評価の値とします。
   script(type='text/javascript' src='/javascripts/wikiMap.js')
