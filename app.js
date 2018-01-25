@@ -9,6 +9,7 @@ var PythonShell = require('python-shell');
 var cors = require('cors')
 
 // API 用
+var date = require('./routes/date');
 var places = require('./routes/places');
 
 // レンダー用
@@ -31,6 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API 用
+app.use('/date', date);
 app.use('/places', places);
 
 // レンダー用
