@@ -64,6 +64,7 @@ def current_places(conn):
     return c.execute(select_sql)
 
 def update_place_datas(data, conn):
+    print(data)
     c = conn.cursor()
 
     sql_set = ','.join(['{0}=?'.format(col) for col in place_datas_column if col != 'name'])
@@ -92,7 +93,7 @@ if __name__ == '__main__':
         elif argv[1] == 'update':
             conn = sqlite3.connect(dbname)
             current_places = [d for d in current_places(conn)]
-            [editDB(data, conn) for data in wd.getPlacesData(current_places)]
+            [update_place_datas(data, conn) for data in wd.getPlacesData(current_places)]
             update_lastmod(conn)
             conn.commit()
             conn.close()
