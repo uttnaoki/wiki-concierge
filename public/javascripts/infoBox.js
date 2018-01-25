@@ -56,6 +56,20 @@ function insertUnregisteredDB () {
 }
 
 (function() {
+  // ページの更新日時(DB更新日時) を取得
+  $.ajax({
+    url: URL + '/date',
+    type: 'get',
+    dataType: 'json'
+  })
+  .done(function (response) {
+    const date = response[0].date;
+    $('#lastmod').html('最終更新日: ' + date)
+  })
+  .fail(function (err) {
+    console.log(err);
+  });
+
   // 座標が登録されていない観光施設 について
   appendPlacesTag_wrapper('?status=0', 'NoCoordinatePlaces')
 

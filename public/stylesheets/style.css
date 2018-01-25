@@ -71,3 +71,9 @@ z-index: -1;
   background-color: #65ace4;
   text-decoration: none;
 }
+
+#lastmod {
+  font-size: 10px;
+  margin-right: 5%;
+  text-align: right;
+}

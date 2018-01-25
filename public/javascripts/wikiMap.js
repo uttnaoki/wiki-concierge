@@ -151,6 +151,21 @@ function drawMap(dataset) {
 }
 
 (function() {
+  // ページの更新日時(DB更新日時) を取得
+  $.ajax({
+    url: URL + '/date',
+    type: 'get',
+    dataType: 'json'
+  })
+  .done(function (response) {
+    const date = response[0].date;
+    $('#lastmod').html('最終更新日: ' + date)
+  })
+  .fail(function (err) {
+    console.log(err);
+  });
+
+  // 観光スポット情報を取得
   $.ajax({
     // wikipedia に座標が書かれているものだけ取得
     url: URL + '/places?status=1',
