@@ -36,7 +36,7 @@ app.use('/date', date);
 app.use('/places', places);
 
 // レンダー用
-app.use('/', index);
+app.use('/', wikiMap);
 app.use('/wikiMap', wikiMap);
 app.use('/infoBox', infoBox);
 
