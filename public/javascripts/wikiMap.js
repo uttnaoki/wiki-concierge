@@ -159,7 +159,7 @@ function drawMap(dataset) {
   })
   .done(function (response) {
     const date = response[0].date;
-    $('#lastmod').html('最終更新日: ' + date)
+    $('#lastmod').html('最終更新時間: ' + date)
   })
   .fail(function (err) {
     console.log(err);
