@@ -4,6 +4,12 @@ block head_content
   link(rel='stylesheet' href='/stylesheets/infoBox.css')
 
 block body_content
+  
+  div.page_exp マップに表示されていない観光スポットをピックアップしています。
+  div.page_exp 一つ目の枠に記載した観光スポットは，wikipediaのページに座標を記入すると，ホームに取り込まれます。
+  div.page_exp 二つ目の枠では，ウィキコンシェルジュに登録して欲しい観光スポットを投稿できます。
+  
+  div#lastmod
   div#already_added
     h2 座標が登録されていない岡山県の観光スポット
     div#NoCoordinatePlaces
@@ -14,5 +20,6 @@ block body_content
       input#textform_unregistered.inline-block.form(type="text" name="textform_unregistered" placeholder=' 観光スポット')
       button(class='inline-block form' type='button' onclick='insertUnregisteredDB()') 送信
     div#UnregisteredPlaces
+  
   
   script(type='text/javascript' src='/javascripts/infoBox.js')

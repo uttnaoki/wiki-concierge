@@ -6,6 +6,10 @@
 	justify-content: center;
 }
 
+#page_exp {
+  margin-left: 5%;
+}
+
 #view {
   height: 80%;
   text-align: center;
