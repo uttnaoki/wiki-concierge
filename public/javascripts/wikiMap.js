@@ -62,6 +62,21 @@ function highlightMarker(name, action) {
   else if (action === 'pan_zoom') map.setView([lat, lng], 16);
 }
 
+function scrollInfo(name) {
+  const target_pt = $('#info_' + name).position().top;
+  const InfoField_pt = $('#information').position().top;
+  const current_scroll_dist = $('#information').scrollTop();
+  const next_scroll_dist = current_scroll_dist + (target_pt - InfoField_pt);
+
+  $('#information').animate({scrollTop:next_scroll_dist},500)
+}
+
+function highlightInfo(name) {
+  $('.active').removeClass('active');
+  $(`#info_${name}`).addClass('active');
+  scrollInfo(name);
+}
+
 // マップ上にマーカーを描画
 function putMarker(map, data) {
   const Scores = {
@@ -89,9 +104,10 @@ function putMarker(map, data) {
     }
   })
   .on("click", function(e) {
+    highlightMarker(data.name, 'pan')
+    highlightInfo(data.name)
     status_select_marker.flag = 1;
     status_select_marker.name = data.name;
-    highlightMarker(data.name, 'pan')
   })
   .on("mouseout", function(e) {
     if (!status_select_marker.flag) {
@@ -123,6 +139,9 @@ function appendInfoTag(data, class_type) {
 
   $('#info_' + data.name).on('click', function() {
     highlightMarker(data.name, 'pan_zoom');
+    highlightInfo(data.name)
+    status_select_marker.flag = 1;
+    status_select_marker.name = data.name;
   })
 }
 
@@ -140,7 +159,8 @@ function drawMap(dataset) {
   ).on('click', function(e) {
     $("#marker" + status_select_marker.name).css({
       "filter": "hue-rotate(240deg)"
-    })
+    });
+    $('#info_' + status_select_marker.name).removeClass('active');
     status_select_marker.flag = 0;
     status_select_marker.name = '';
   });

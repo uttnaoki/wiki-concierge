@@ -43,10 +43,15 @@
   width: 100%;
   height: 20%;
   display: table;
+  box-sizing: border-box;　
+}
+#information .active {
+  border: 4px solid #00CCFF;
 }
 #information .info_content:hover {
   opacity: 0.8;
 }
+
 #information .info_content_inner {
   width: 50%;
   height: 100%;
