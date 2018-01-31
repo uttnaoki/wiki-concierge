@@ -26,11 +26,11 @@ bs4, sqlite3, pillow
 
 ### 設定ファイルの修正
 以下の2つのファイルを編集します．
-1. wiki-concierge/public/javascripts/config.js  
+1. /public/javascripts/config.js  
 1行目の変数URLに環境に合わせたアドレス(文字列)を入れてください．  
 最後に/(スラッシュ)を入れないようにしてください．
-1. wiki-concierge/app.js  
+1. /app.js  
 変数python_optionsについて，
-pythonPathの中身を動作環境のpythonのパスを入れてください．  
+pythonPathの中身を動作環境のpythonのパスに変えてください．  
 pythonのパスについては以下のコマンドで確認できます．  
 $ which python
