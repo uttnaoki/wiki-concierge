@@ -4,6 +4,7 @@ const icon_filepath = '/images/icon1.png';
 const icon_filepath_phone = '';
 let status_select_marker = { flag: 0, name: '' };
 
+// Scoresを基にマーカーのsizeまたはopacityを計算
 function calScore(Scores, type) {
   let result = 0;
   const result_set = {
@@ -36,6 +37,7 @@ function setIconOption(Scores) {
   return Icon;
 }
 
+// マーカー上部に表示されるポップアップメッセージの内容を作成
 function makePopupMessage(name, overview) {
   const message =
     '<h2>' +
@@ -58,6 +60,7 @@ function highlightMarker(name, click_flag) {
   if (click_flag) map.panTo([lat, lng]);
 }
 
+// マップ上にマーカーを描画
 function putMarker(map, data) {
   const Scores = {
     Score_countFulltext: data.Score_countFulltext,
@@ -105,6 +108,7 @@ function putMarker(map, data) {
   return marker;
 }
 
+// 観光スポット一覧の中に画像とスポット名を追加
 function appendInfoTag(data, class_type) {
   $('#information').append('<div id="info_' + data.name + '" class="info_content">'
       + '<div class="info_content_inner class_type' + class_type + '">'
@@ -122,8 +126,9 @@ function appendInfoTag(data, class_type) {
 var marker_set = {};
 var map;
 
+// マップとスポット一覧を描画
 function drawMap(dataset) {
-  //地図の設定
+  // マップの設定
   map = L.map('map', {
     minZoom: 9
   }).setView(
@@ -136,7 +141,7 @@ function drawMap(dataset) {
     status_select_marker.flag = 0;
     status_select_marker.name = '';
   });
-  //地図タイルの設定
+  // マップタイルの設定
   L.tileLayer(
     'http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -144,12 +149,15 @@ function drawMap(dataset) {
   ).addTo(map);
   var info_class_type = 0;
   for (var d of dataset) {
+    // マップ上にマーカーを描画
     marker_set[d.name] = putMarker(map, d);
+    // スポット一覧の中身を描画
     appendInfoTag(d, info_class_type);
     info_class_type = Number(!info_class_type);
   }
 }
 
+// ページ下部に指標の説明を描画
 const view_legend = () => {
   const level_num = 6;
   const max_size = calScore({tmp: level_num-1}, 'size');
@@ -188,7 +196,7 @@ const view_legend = () => {
 };
 
 (function() {
-  // ページの更新日時(DB更新日時) を取得
+  // ページの更新日時(DB更新日時) を取得し，表示
   $.ajax({
     url: URL + '/date',
     type: 'get',
@@ -202,7 +210,7 @@ const view_legend = () => {
     console.log(err);
   });
 
-  // 観光スポット情報を取得
+  // 観光スポット情報を取得し，マップとスポット一覧を描画
   $.ajax({
     // wikipedia に座標が書かれているものだけ取得
     url: URL + '/places?status=1',
@@ -217,5 +225,6 @@ const view_legend = () => {
     console.log(err);
   });
 
+  // ページ下部に指標の説明を描画
   view_legend();
 }());
