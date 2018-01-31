@@ -47,7 +47,7 @@ function makePopupMessage(name, overview) {
   return message;
 }
 
-function highlightMarker(name, click_flag) {
+function highlightMarker(name, action) {
   $("#marker" + name).css({
     "filter": "hue-rotate(0deg)"
   })
@@ -57,7 +57,9 @@ function highlightMarker(name, click_flag) {
   marker_set[name].openPopup();
   const lat = marker_set[name]._latlng.lat;
   const lng = marker_set[name]._latlng.lng;
-  if (click_flag) map.panTo([lat, lng]);
+
+  if (action === 'pan') map.panTo([lat, lng])
+  else if (action === 'pan_zoom') map.setView([lat, lng], 16);
 }
 
 // マップ上にマーカーを描画
@@ -89,7 +91,7 @@ function putMarker(map, data) {
   .on("click", function(e) {
     status_select_marker.flag = 1;
     status_select_marker.name = data.name;
-    highlightMarker(data.name, 1)
+    highlightMarker(data.name, 'pan')
   })
   .on("mouseout", function(e) {
     if (!status_select_marker.flag) {
@@ -118,8 +120,9 @@ function appendInfoTag(data, class_type) {
         + '<p class="textbox">'　+ data.name + '</p>'
       + '</div>'
     + '</div>')
+
   $('#info_' + data.name).on('click', function() {
-    highlightMarker(data.name, 1);
+    highlightMarker(data.name, 'pan_zoom');
   })
 }
 
