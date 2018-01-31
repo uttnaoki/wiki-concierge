@@ -67,16 +67,11 @@ var python_options = {
   mode: 'text',
   pythonPath: process.env.HOSTNAME ? '/home/naoki/.pyenv/shims/python' : '/usr/local/bin/python3',
   pythonOptions: ['-B'],
-  args: ['reset'],
+  args: ['update'],
   scriptPath: 'util'
 };
-PythonShell.run('updateDB.py', python_options, function (err, results) {
-  if (err) throw err;
-  console.log('updateDB_stdout:' + results);
-});
 
 // 定期実行するコード
-python_options.args = ['update']
 setInterval(function() {
   PythonShell.run('updateDB.py', python_options, function (err, results) {
     if (err) throw err;
