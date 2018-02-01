@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var sqlite3 = require('sqlite3');
 var app = express();
-var db = new sqlite3.Database('database.db');
 
 /* wikiデータを送る */
 router.get('/', function(req, res, next) {
@@ -117,6 +116,11 @@ router.post('/unregistered', function(req, res) {
 router.delete('/unregistered', function(req, res) {
   const place_name = req.body.name;
   const sql = `DELETE FROM unregistered WHERE name = '${place_name}'`
+  const db = new sqlite3.Database('database.db');
+  let response = {
+    message: '',
+    statusCode: 200
+  };
 
   const deleteDB = function (place_name) {
     return new Promise(function (resolve, reject) {
@@ -130,11 +134,14 @@ router.delete('/unregistered', function(req, res) {
   };
 
   deleteDB(place_name).then(function (result) {
-    res.send(`"${place_name}"を追加してほしい観光スポットから削除しました。`);
+    response.message = `"${place_name}"を追加してほしい観光スポットから削除しました。`;
+    res.send(response);
     db.close();
   }).catch(function (err) {
     console.log('Failure:', err);
-    res.send(`"${place_name}"を追加してほしい観光スポットから削除できませんでした。`)
+    response.message = `"${place_name}"を追加してほしい観光スポットから削除できませんでした。`;
+    response.statusCode = 500;
+    res.send(response)
     db.close();
   });
 })
