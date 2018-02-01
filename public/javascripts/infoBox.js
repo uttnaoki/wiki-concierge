@@ -1,17 +1,48 @@
+const deletePlaceTag = (place) => {
+  $(`#UnregisteredPlaces_box_${place}`).remove();
+  $.ajax({
+    url: `${URL}/places/unregistered`,
+    type: 'delete',
+    data: {
+      'name': place
+    }
+  })
+  .done(function (response) {
+    if (response.statusCode === 200) {
+      alert(`${place}を削除しました。`)
+    }
+  })
+  .fail(function (err) {
+    console.log(err);
+  });
+};
+
+const del_tag = (place, boxname) => {
+  if (boxname === 'NoCoordinatePlaces') {
+    return ''
+  } else if (boxname === 'UnregisteredPlaces') {
+    return `<img src="images/del_icon.png" onClick="deletePlaceTag('${place}')">`
+  }
+};
+
 function appendPlacesTag(places, boxname) {
+  // const img_tag = boxname === 'UnregisteredPlaces' ? '<img src="images/del_icon.png">' : ''
+
   for (const p of places) {
-    const this_id = boxname + '_' + p.name;
+    const box_id = `${boxname}_box_${p.name}`
+    const place_tag_id = `${boxname}_tag_${p.name}`
 
-    $('#' + boxname).append('<p id="' + this_id + '"'
-      + ' class="place_tag">'
-      + p.name + '</p>')
+    $(`#${boxname}`).append(`<div class="place_tag" id="${box_id}">
+      ${del_tag(p.name, boxname)}
+      <p id="${place_tag_id}">${p.name}</p>
+      </div>`)
 
-    $('#' + this_id).on('click', function() {
+    $(`#${place_tag_id}`).on('click', function() {
       // wikipedia のページへ移動
       window.location.href = 'https://ja.wikipedia.org/wiki/' + p.name;
     })
   }
-}
+};
 
 function appendPlacesTag_wrapper (lower_url, id) {
   $.ajax({

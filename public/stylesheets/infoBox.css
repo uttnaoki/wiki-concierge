@@ -27,6 +27,16 @@
 
 .place_tag {
   display: inline-block;
+  position: relative;
+}
+.place_tag img {
+  position: absolute;
+  width: 1.3em;
+  top: -0.2em;
+  left: -0.2em;
+  cursor: pointer;
+}
+.place_tag p {
   margin: 0.4em;
   padding: 0.3em;
   color: white;
@@ -34,7 +44,7 @@
   border-radius: 0.5em;
   cursor: pointer;
 }
-.place_tag:hover {
+.place_tag p:hover {
   opacity:0.8;
 }
 
