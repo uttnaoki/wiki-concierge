@@ -2,6 +2,10 @@
   display: inline-block;
 }
 
+button {
+  cursor: pointer;
+}
+
 #lastmod {
   margin-right: 0%;
 }
@@ -28,13 +32,6 @@
 .place_tag {
   display: inline-block;
   position: relative;
-}
-.place_tag img {
-  position: absolute;
-  width: 1.3em;
-  top: -0.2em;
-  left: -0.2em;
-  cursor: pointer;
 }
 .place_tag p {
   margin: 0.4em;
@@ -69,7 +66,29 @@
   height: 2.2em;
   vertical-align: middle;
   border-radius: 0.5em;
-  background-color: #fff;
+  /* background-color: #fff; */
+  margin-right: 1em;
+  outline: none;
+}
+#form_unregistered button:hover {
+  /* opacity: 0.8; */
+}
+#del_button {
+  background-color: #FF3232;
+  color: #fff;
+}
+#del_button.off {
+  background-color: #00AAAA;
+  color: #fff;
+}
+
+.place_tag .del_icon {
+  position: absolute;
+  width: 1.3em;
+  top: -0.2em;
+  left: -0.2em;
+  cursor: pointer;
+  visibility: hidden;
 }
 
 #UnregisteredPlaces {

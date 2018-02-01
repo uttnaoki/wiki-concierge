@@ -21,9 +21,20 @@ const del_tag = (place, boxname) => {
   if (boxname === 'NoCoordinatePlaces') {
     return ''
   } else if (boxname === 'UnregisteredPlaces') {
-    return `<img src="images/del_icon.png" onClick="deletePlaceTag('${place}')">`
+    return `<img src="images/del_icon.png" onClick="deletePlaceTag('${place}')" class="del_icon">`
   }
 };
+
+const DeleteMode = () => {
+  const status = $('#del_button').html();
+  if (status === '削除') {
+    $('.del_icon').css('visibility', 'visible');
+    $('#del_button').html('削除OFF').addClass('off');
+  } else if (status === '削除OFF') {
+    $('.del_icon').css('visibility', 'hidden');
+    $('#del_button').html('削除').removeClass('off');
+  }
+}
 
 function appendPlacesTag(places, boxname) {
   // const img_tag = boxname === 'UnregisteredPlaces' ? '<img src="images/del_icon.png">' : ''

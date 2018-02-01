@@ -17,8 +17,9 @@ block body_content
   div#befor_adding
     div#form_unregistered
       h2.inline-block 追加してほしい岡山県の観光スポット
-      input#textform_unregistered.inline-block.form(type="text" name="textform_unregistered" placeholder=' 観光スポット')
-      button(class='inline-block form' type='button' onclick='insertUnregisteredDB()') 送信
+      input#textform_unregistered.inline-block(type="text" name="textform_unregistered" placeholder=' 観光スポット')
+      button.inline-block(type='button' onclick='insertUnregisteredDB()') 送信
+      button#del_button.inline-block(type='button' onclick='DeleteMode()') 削除
     div#UnregisteredPlaces
   
   
