@@ -28,10 +28,20 @@ const del_tag = (place, boxname) => {
 const DeleteMode = () => {
   const status = $('#del_button').html();
   if (status === '削除') {
-    $('.del_icon').css('visibility', 'visible');
+    // 削除タグの生成(可視化)
+    // $('.del_icon').css('visibility', 'visible');
+    $('.del_icon')
+      .css({'visibility':'visible'})
+      .animate({opacity: 1}, 400);
+    // 削除ボタンの状態変更
     $('#del_button').html('削除OFF').addClass('off');
   } else if (status === '削除OFF') {
-    $('.del_icon').css('visibility', 'hidden');
+    // 削除タグの削除(不可視化)
+    // $('.del_icon').css('visibility', 'hidden');
+    $('.del_icon')
+      .animate({opacity: 0}, 400)
+      .css({'visibility':'hidden'});
+    // 削除ボタンの状態変更
     $('#del_button').html('削除').removeClass('off');
   }
 }

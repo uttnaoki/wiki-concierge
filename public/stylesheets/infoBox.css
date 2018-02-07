@@ -89,6 +89,7 @@ button {
   left: -0.2em;
   cursor: pointer;
   visibility: hidden;
+  opacity: 0;
 }
 
 #UnregisteredPlaces {
