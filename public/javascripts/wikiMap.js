@@ -268,6 +268,11 @@ const view_legend = () => {
 
   // 評価尺度セレクタのクリックイベントを定義
   const setScores = (data, usable_metrics) => {
+    // 評価尺度が1つも選択されていない場合，ページを評価せず，3を返す．
+    if (!usable_metrics.length) {
+      return {tmp: 3};
+    }
+    
     const usable_scores = {};
     for (const metrics of usable_metrics) {
       const score_name = eval_metrics[metrics];
@@ -287,7 +292,7 @@ const view_legend = () => {
       this_marker.setIcon(icon).setOpacity(opacity);
     }
   }
-  
+
   $('.metrics_selector_elem').on('click', function() {
     // 評価尺度セレクタのステータスを変更
     const this_status = $(this).val();
