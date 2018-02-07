@@ -1,7 +1,10 @@
 extends layout
 
 block head_content
+  link(rel="stylesheet" href="/third_party/remodal/remodal.css")
+  link(rel="stylesheet" href='/third_party/remodal/remodal-default-theme.css')
   link(rel='stylesheet' href='/stylesheets/infoBox.css')
+  script(type="application/javascript", src="/third_party/remodal/remodal.min.js")
 
 block body_content
   
@@ -17,10 +20,17 @@ block body_content
   div#befor_adding
     div#form_unregistered
       h2.inline-block 追加してほしい岡山県の観光スポット
-      input#textform_unregistered.inline-block(type="text" name="textform_unregistered" placeholder=' 観光スポット')
-      button.inline-block(type='button' onclick='insertUnregisteredDB()') 送信
+      button#add_button.inline-block(data-remodal-target="modal") 追加
       button#del_button.inline-block(type='button' onclick='DeleteMode()') 削除
     div#UnregisteredPlaces
   
+  div.remodal-bg
+    
+  div.remodal(data-remodal-id="modal")
+    button(data-remodal-action="close" class="remodal-close")
+    p ウィキコンシェルジュに追加して欲しい岡山県の観光スポット名を入力してください
+    br
+    input#textform_unregistered.remodal-textform(type="text" name="textform_unregistered" placeholder=' 観光スポット名')
+    button.remodal-confirm(data-remodal-action="confirm") 送信
   
   script(type='text/javascript' src='/javascripts/infoBox.js')

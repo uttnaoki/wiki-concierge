@@ -63,17 +63,21 @@ button {
   background-color: #fff;
 }
 #form_unregistered button {
-  height: 2.2em;
+  height: 2em;
+  font-size: 1.1em;
   vertical-align: middle;
   border-radius: 0.5em;
-  /* background-color: #fff; */
-  margin-right: 1em;
   outline: none;
 }
 #form_unregistered button:hover {
-  /* opacity: 0.8; */
+}
+#add_button {
+  margin-left: 1em;
+  background-color: #30e034;
+  color: #fff;
 }
 #del_button {
+  margin-left: 0.6em;
   background-color: #FF3232;
   color: #fff;
 }

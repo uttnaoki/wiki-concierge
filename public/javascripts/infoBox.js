@@ -82,6 +82,7 @@ function appendPlacesTag_wrapper (lower_url, id) {
 // Unregisteredテーブル にデータを格納
 function insertUnregisteredDB () {
   var place_name = $('#textform_unregistered').val();
+  console.log(place_name);
   if (!place_name) {
     alert('施設名を入力していません．')
     return;
@@ -106,6 +107,11 @@ function insertUnregisteredDB () {
 
   $('#textform_unregistered').val('');
 }
+
+// 追加してほしい岡山県の観光スポットへの投稿フォーム
+$(document).on('confirmation', '.remodal', function () {
+  insertUnregisteredDB();
+});
 
 (function() {
   // ページの更新日時(DB更新日時) を取得
