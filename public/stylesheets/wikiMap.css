@@ -22,6 +22,19 @@
   display: inline-block;
 }
 
+#metrics_selectors {
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+}
+.metrics_selector_elem {
+  z-index: 3;
+  outline: none;
+}
+.metrics_selector_elem[value='on'] {
+  background-color: red;
+}
+
 .PopupMessage {
   max-width: 350px;
   max-height: 100px;

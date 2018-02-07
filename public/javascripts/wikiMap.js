@@ -234,6 +234,7 @@ const view_legend = () => {
   });
 
   // 観光スポット情報を取得し，マップとスポット一覧を描画
+  let dataset;
   $.ajax({
     // wikipedia に座標が書かれているものだけ取得
     url: URL + '/places?status=1',
@@ -241,13 +242,68 @@ const view_legend = () => {
     dataType: 'json'
   })
   .done(function (response) {
-    // response にはデータセットが入っています．
-    drawMap(response);
+    // 一つ上のスコープでデータを保持
+    dataset = response;
+    drawMap(dataset);
   })
   .fail(function (err) {
     console.log(err);
   });
 
+  // wikiページの評価尺度のセレクタを追加
+  $('#map').append('<div id="metrics_selectors"></div>')
+  const eval_metrics = {
+    '他言語の記事数': 'Score_countLang',
+    '目次の項目数': 'Score_itemCount',
+    'テキスト量': 'Score_countFulltext',
+    '記事の更新頻度': 'Score_editfrequency',
+    '編集者の数': 'Score_countperson'
+  };
+  for (const metrics in eval_metrics) {
+    const appended_tag = `<button id="metrics_${metrics}"
+      class="metrics_selector_elem" value='on'>${metrics}</button>`;
+
+    $('#metrics_selectors').append(appended_tag);
+  }
+
+  // 評価尺度セレクタのクリックイベントを定義
+  const setScores = (data, usable_metrics) => {
+    const usable_scores = {};
+    for (const metrics of usable_metrics) {
+      const score_name = eval_metrics[metrics];
+      usable_scores[score_name] = data[score_name];
+    }
+    return usable_scores;
+  }
+
+  // 各マーカーのサイズ・透過度・ポップアップのアンカーを変更
+  const redisplayMarker = (dataset, usable_metrics) => {
+    for (const data of dataset) {
+      const this_marker = marker_set[data.name];
+      const usable_scores = setScores(data, usable_metrics);
+      const icon = setIconOption(usable_scores)
+      const opacity = calScore(usable_scores, 'opacity');
+
+      this_marker.setIcon(icon).setOpacity(opacity);
+    }
+  }
+  
+  $('.metrics_selector_elem').on('click', function() {
+    // 評価尺度セレクタのステータスを変更
+    const this_status = $(this).val();
+    const reverse_status = {
+      'on': 'off',
+      'off': 'on'
+    };
+    $(this).val(reverse_status[this_status]);
+
+    // 使用可能な評価尺度でwikiページを再評価し，マーカーを再描画
+    let usable_metrics = [];
+    $('.metrics_selector_elem[value="on"]').each(function(){
+      usable_metrics.push($(this).html());
+    })
+    redisplayMarker(dataset, usable_metrics);
+  })
   // ページ下部に指標の説明を描画
   view_legend();
 }());
