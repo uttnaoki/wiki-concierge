@@ -30,9 +30,13 @@
 .metrics_selector_elem {
   z-index: 3;
   outline: none;
+  background-color: #ccc;
+  color: #777;
+  cursor: pointer;
 }
 .metrics_selector_elem[value='on'] {
-  background-color: red;
+  background-color: #fff;
+  color: #000;
 }
 
 .PopupMessage {
