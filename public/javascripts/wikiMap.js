@@ -48,11 +48,11 @@ function makePopupMessage(name, overview) {
 }
 
 function highlightMarker(name, action) {
-  $("#marker" + name).css({
-    "filter": "hue-rotate(0deg)"
+  $(`#marker${name}`).css({
+    filter: 'hue-rotate(0deg)'
   })
-  $(".leaflet-marker-icon:not(#marker" + name + ")").css({
-    "filter": "hue-rotate(240deg)"
+  $(`.leaflet-marker-icon:not(#marker${name})`).css({
+    filter: 'hue-rotate(240deg)'
   })
   marker_set[name].openPopup();
   const lat = marker_set[name]._latlng.lat;
@@ -99,6 +99,7 @@ function putMarker(map, data) {
   marker.on("mouseover", function(e) {
     highlightMarker(data.name)
     if (data.name != status_select_marker.name) {
+      $(`#info_${status_select_marker.name}`).removeClass('active');
       status_select_marker.flag = 0;
       status_select_marker.name = '';
     }
@@ -157,10 +158,11 @@ function drawMap(dataset) {
     [34.80501, 133.755],
     9
   ).on('click', function(e) {
-    $("#marker" + status_select_marker.name).css({
-      "filter": "hue-rotate(240deg)"
+    // マーカー以外をクリックした際の動作
+    $(`#marker${status_select_marker.name}`).css({
+      filter: 'hue-rotate(240deg)'
     });
-    $('#info_' + status_select_marker.name).removeClass('active');
+    $(`#info_${status_select_marker.name}`).removeClass('active');
     status_select_marker.flag = 0;
     status_select_marker.name = '';
   });
