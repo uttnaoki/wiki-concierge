@@ -32,10 +32,11 @@
   outline: none;
   background-color: #ccc;
   color: #777;
+  border-color: #6c757d;
   cursor: pointer;
 }
 .metrics_selector_elem[value='on'] {
-  background-color: #fff;
+  background-color: #fafafa;
   color: #000;
 }
 

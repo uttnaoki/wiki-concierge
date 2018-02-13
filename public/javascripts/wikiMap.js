@@ -261,7 +261,7 @@ const view_legend = () => {
   };
   for (const metrics in eval_metrics) {
     const appended_tag = `<button id="metrics_${metrics}"
-      class="metrics_selector_elem" value='on'>${metrics}</button>`;
+      class="btn metrics_selector_elem" value='on'>${metrics}</button>`;
 
     $('#metrics_selectors').append(appended_tag);
   }
@@ -272,7 +272,7 @@ const view_legend = () => {
     if (!usable_metrics.length) {
       return {tmp: 3};
     }
-    
+
     const usable_scores = {};
     for (const metrics of usable_metrics) {
       const score_name = eval_metrics[metrics];
