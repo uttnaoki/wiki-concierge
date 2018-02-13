@@ -39,11 +39,12 @@ function setIconOption(Scores) {
 
 // マーカー上部に表示されるポップアップメッセージの内容を作成
 function makePopupMessage(name, overview) {
-  const message =
-    '<h2>' +
-    '<a href="https://ja.wikipedia.org/wiki/' + name + '" target="_blank">' + name + '</a>' +
-    '</h2>' +
-    '<p class="PopupMessage">' + overview + '</p>';
+  const message = `
+    <h2>
+      <a href="https://ja.wikipedia.org/wiki/${name}" target="_blank">${name}</a>
+    </h2>
+    <p class="PopupMessage">${overview}</p>
+  `;
   return message;
 }
 
@@ -113,15 +114,15 @@ function putMarker(map, data) {
   .on("mouseout", function(e) {
     if (!status_select_marker.flag) {
       marker.closePopup();
-      $("#marker" + data.name).css({
-        "filter": "hue-rotate(240deg)"
+      $(`#marker${data.name}`).css({
+        filter: "hue-rotate(240deg)"
       })
     }
   })
   $(marker._icon).attr("id", "marker" + data.name)
   $(marker._icon).addClass("marker")
   $(marker._icon).css({
-    "filter": "hue-rotate(240deg)"
+    filter: "hue-rotate(240deg)"
   })
 
   return marker;
@@ -129,16 +130,18 @@ function putMarker(map, data) {
 
 // 観光スポット一覧の中に画像とスポット名を追加
 function appendInfoTag(data, class_type) {
-  $('#information').append('<div id="info_' + data.name + '" class="info_content">'
-      + '<div class="info_content_inner class_type' + class_type + '">'
-        + '<img src="images/' + data.name + '.jpg" alt="' + data.name + '">'
-      + '</div>'
-      + '<div class="info_content_inner class_type' + class_type + '">'
-        + '<p class="textbox">'　+ data.name + '</p>'
-      + '</div>'
-    + '</div>')
+  $('#information').append(`
+    <div id="info_${data.name}" class="info_content">
+      <div class="info_content_inner class_type${class_type}">
+        <img src="images/${data.name}.jpg" alt="${data.name}">
+      </div>
+      <div class="info_content_inner class_type${class_type}">
+        <p class="textbox">${data.name}</p>
+      </div>
+    </div>
+  `)
 
-  $('#info_' + data.name).on('click', function() {
+  $(`#info_${data.name}`).on('click', function() {
     highlightMarker(data.name, 'pan_zoom');
     highlightInfo(data.name)
     status_select_marker.flag = 1;
@@ -190,25 +193,31 @@ const view_legend = () => {
   const img_cell = (cell_num) => {
     let tag = '';
     for (let i = 0; i < cell_num; i++) {
-      tag += '<td id="legend_img' + i + '" class="img_td"></td>';
+      tag += `<td id="legend_img${i}" class="img_td"></td>`;
     }
     return tag;
   };
   const level_cell = (cell_num) => {
     let tag = '';
     for (let i = 0; i < cell_num; i++) {
-      tag += '<td class="level_cell">' + (i+1) + '</td>';
+      tag += `<td class="level_cell">${i+1}</td>`;
     }
     return tag;
   }
 
-  $('#legend_row0').append('<td rowspan="2"><div class="label">低い評価<div></td>'
-    + img_cell(level_num) + '<td rowspan="2"><div class="label">高い評価<div></td>')
+  $('#legend_row0').append(`
+    <td rowspan="2">
+      <div class="label">低い評価<div>
+    </td>
+    ${img_cell(level_num)}
+    <td rowspan="2">
+      <div class="label">高い評価<div>
+    </td>
+  `)
   $('#legend_row1').append(level_cell(level_num))
 
   for (let i = 0; i < level_num; i++) {
-    const img = $('<img src="' + icon_filepath + '">');
-    // const img = $('<img src="' + icon_filepath + '" id="legend_img"' + i + '>');
+    const img = $(`<img src="${icon_filepath}">`);
     const size = calScore({tmp: i}, 'size');
     const opacity = calScore({tmp: i}, 'opacity');
 
