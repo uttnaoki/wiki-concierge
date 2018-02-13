@@ -51,7 +51,7 @@ function highlightMarker(name, action) {
   $("#marker" + name).css({
     "filter": "hue-rotate(0deg)"
   })
-  $(".marker:not(#marker" + name + ")").css({
+  $(".leaflet-marker-icon:not(#marker" + name + ")").css({
     "filter": "hue-rotate(240deg)"
   })
   marker_set[name].openPopup();
