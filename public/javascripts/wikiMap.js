@@ -61,7 +61,7 @@ function highlightMarker(name, action) {
   const lng = marker_set[name]._latlng.lng;
 
   if (action === 'pan') map.panTo([lat+0.05, lng])
-  else if (action === 'pan_zoom') map.setView([lat+0.0005, lng], 16);
+  else if (action === 'pan_zoom') map.setView([lat+0.0005, lng], 14);
 }
 
 function scrollInfo(name) {
