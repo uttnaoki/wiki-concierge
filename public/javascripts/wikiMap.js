@@ -19,6 +19,7 @@ function calScore(Scores, type) {
     scores_len += 1;
   }
   const scores_mean = scores_sum / scores_len;
+  if (type === 'score') return scores_mean;
 
   return result_set[type][Math.round(scores_mean)];
 }
@@ -129,23 +130,23 @@ function putMarker(map, data) {
 }
 
 // 観光スポット一覧の中に画像とスポット名を追加
-function appendInfoTag(data, class_type) {
+function appendInfoTag(spot_name, class_type) {
   $('#information').append(`
-    <div id="info_${data.name}" class="info_content">
+    <div id="info_${spot_name}" class="info_content">
       <div class="info_content_inner class_type${class_type}">
-        <img src="images/${data.name}.jpg" alt="${data.name}">
+        <img src="images/${spot_name}.jpg" alt="${spot_name}">
       </div>
       <div class="info_content_inner class_type${class_type}">
-        <p class="textbox">${data.name}</p>
+        <p class="textbox">${spot_name}</p>
       </div>
     </div>
   `)
 
-  $(`#info_${data.name}`).on('click', function() {
-    highlightMarker(data.name, 'pan_zoom');
-    highlightInfo(data.name)
+  $(`#info_${spot_name}`).on('click', function() {
+    highlightMarker(spot_name, 'pan_zoom');
+    highlightInfo(spot_name)
     status_select_marker.flag = 1;
-    status_select_marker.name = data.name;
+    status_select_marker.name = spot_name;
   })
 }
 
@@ -176,11 +177,34 @@ function drawMap(dataset) {
     }
   ).addTo(map);
   var info_class_type = 0;
-  for (var d of dataset) {
+
+  const spots_score = [];
+  for (var data of dataset) {
     // マップ上にマーカーを描画
-    marker_set[d.name] = putMarker(map, d);
+    marker_set[data.name] = putMarker(map, data);
+
+    const Scores = {
+      Score_countFulltext: data.Score_countFulltext,
+      Score_countLang: data.Score_countLang,
+      Score_itemCount: data.Score_itemCount,
+      Score_editfrequency: data.Score_editfrequency,
+      Score_countperson: data.Score_countperson
+    }
+    spots_score.push({
+      name: data.name,
+      score: calScore(Scores, 'score')
+    })
+  }
+  // スコアを基にスポットを降順でソート
+  spots_score.sort(function(a,b){
+    if(a.score > b.score) return -1;
+    if(a.score < b.score) return 1;
+    return 0;
+  });
+
+  for (var s of spots_score) {
     // スポット一覧の中身を描画
-    appendInfoTag(d, info_class_type);
+    appendInfoTag(s.name, info_class_type);
     info_class_type = Number(!info_class_type);
   }
 }
@@ -294,6 +318,8 @@ const view_legend = () => {
 
   // 各マーカーのサイズ・透過度・ポップアップのアンカーを変更
   const redisplayMarker = (dataset, usable_metrics) => {
+    const spots_score = [];
+
     for (const data of dataset) {
       const this_marker = marker_set[data.name];
       const usable_scores = setScores(data, usable_metrics);
@@ -301,7 +327,14 @@ const view_legend = () => {
       const opacity = calScore(usable_scores, 'opacity');
 
       this_marker.setIcon(icon).setOpacity(opacity);
+
+      // spots_score.[data.name] = calScore(usable_scores, 'score');
+      spots_score.push({
+        name: data.name,
+        score: calScore(usable_scores, 'score')
+      })
     }
+    return spots_score;
   }
 
   $('.metrics_selector_elem').on('click', function() {
@@ -318,7 +351,20 @@ const view_legend = () => {
     $('.metrics_selector_elem[value="on"]').each(function(){
       usable_metrics.push($(this).html());
     })
-    redisplayMarker(dataset, usable_metrics);
+    let spots_score = redisplayMarker(dataset, usable_metrics);
+
+    // スコアを基にスポットを降順でソート
+    spots_score.sort(function(a,b){
+      if(a.score > b.score) return -1;
+      if(a.score < b.score) return 1;
+      return 0;
+    });
+    let info_class_type = 0;
+    $('#information').empty();
+    for (var s of spots_score) {
+      appendInfoTag(s.name, info_class_type);
+      info_class_type = Number(!info_class_type);
+    }
   })
   // ページ下部に指標の説明を描画
   view_legend();
