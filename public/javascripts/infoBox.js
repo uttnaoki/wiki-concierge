@@ -7,12 +7,12 @@ const deletePlaceTag = (place) => {
       'name': place
     }
   })
-  .done(function (response) {
+  .done( (response) => {
     if (response.statusCode === 200) {
       alert(`${place}を削除しました。`)
     }
   })
-  .fail(function (err) {
+  .fail( (err) => {
     console.log(err);
   });
 };
@@ -46,7 +46,7 @@ const DeleteMode = () => {
   }
 }
 
-function appendPlacesTag(places, boxname) {
+const appendPlacesTag = (places, boxname) => {
   // const img_tag = boxname === 'UnregisteredPlaces' ? '<img src="images/del_icon.png">' : ''
 
   for (const p of places) {
@@ -58,29 +58,29 @@ function appendPlacesTag(places, boxname) {
       <p id="${place_tag_id}">${p.name}</p>
       </div>`)
 
-    $(`#${place_tag_id}`).on('click', function() {
+    $(`#${place_tag_id}`).on('click', () => {
       // wikipedia のページへ移動
       window.location.href = 'https://ja.wikipedia.org/wiki/' + p.name;
     })
   }
 };
 
-function appendPlacesTag_wrapper (lower_url, id) {
+const appendPlacesTag_wrapper = (lower_url, id) => {
   $.ajax({
     url: URL + '/places' + lower_url,
     type: 'get',
     dataType: 'json'
   })
-  .done(function (response) {
+  .done( (response) => {
     appendPlacesTag(response, id)
   })
-  .fail(function (err) {
+  .fail( (err) => {
     console.log(err);
   });
 }
 
 // Unregisteredテーブル にデータを格納
-function insertUnregisteredDB () {
+const insertUnregisteredDB = ()  => {
   var place_name = $('#textform_unregistered').val();
   console.log(place_name);
   if (!place_name) {
@@ -95,13 +95,13 @@ function insertUnregisteredDB () {
       'name': place_name
     }
   })
-  .done(function (response) {
+  .done( (response) => {
     console.log(response);
     // 未登録施設のタグを再描画
     $('#UnregisteredPlaces').empty();
     appendPlacesTag_wrapper('/unregistered', 'UnregisteredPlaces')
   })
-  .fail(function (err) {
+  .fail( (err) => {
     console.log(err);
   });
 
@@ -109,22 +109,22 @@ function insertUnregisteredDB () {
 }
 
 // 追加してほしい岡山県の観光スポットへの投稿フォーム
-$(document).on('confirmation', '.remodal', function () {
+$(document).on('confirmation', '.remodal', () => {
   insertUnregisteredDB();
 });
 
-(function() {
+(() => {
   // ページの更新日時(DB更新日時) を取得
   $.ajax({
     url: URL + '/date',
     type: 'get',
     dataType: 'json'
   })
-  .done(function (response) {
+  .done( (response) => {
     const date = response[0].date;
     $('#lastmod').html('最終更新時間: ' + date)
   })
-  .fail(function (err) {
+  .fail( (err) => {
     console.log(err);
   });
 
@@ -133,4 +133,4 @@ $(document).on('confirmation', '.remodal', function () {
 
   // wikipedia に登録されていない観光施設 について
   appendPlacesTag_wrapper('/unregistered', 'UnregisteredPlaces')
-}());
+})();
