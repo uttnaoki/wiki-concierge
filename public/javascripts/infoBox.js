@@ -60,14 +60,14 @@ const appendPlacesTag = (places, boxname) => {
 
     $(`#${place_tag_id}`).on('click', () => {
       // wikipedia のページへ移動
-      window.location.href = 'https://ja.wikipedia.org/wiki/' + p.name;
+      window.location.href = `https://ja.wikipedia.org/wiki/${p.name}`;
     })
   }
 };
 
 const appendPlacesTag_wrapper = (lower_url, id) => {
   $.ajax({
-    url: URL + '/places' + lower_url,
+    url: `${URL}/places${lower_url}`,
     type: 'get',
     dataType: 'json'
   })
@@ -89,7 +89,7 @@ const insertUnregisteredDB = ()  => {
   }
 
   $.ajax({
-    url: URL + '/places/unregistered',
+    url: `${URL}/places/unregistered`,
     type: 'POST',
     data: {
       'name': place_name
@@ -116,13 +116,13 @@ $(document).on('confirmation', '.remodal', () => {
 (() => {
   // ページの更新日時(DB更新日時) を取得
   $.ajax({
-    url: URL + '/date',
+    url: `${URL}/date`,
     type: 'get',
     dataType: 'json'
   })
   .done( (response) => {
     const date = response[0].date;
-    $('#lastmod').html('最終更新時間: ' + date)
+    $('#lastmod').html(`最終更新時間: ${date}`)
   })
   .fail( (err) => {
     console.log(err);
